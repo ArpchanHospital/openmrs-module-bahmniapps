@@ -17,9 +17,14 @@ jobs:
       HELM_CHART_PATH: package/helm/
     steps:
       - uses: actions/checkout@v2
+      
+       # Add your custom Apache configuration file
+      - name: Add Custom Apache Configuration
+        run: cp docker-config/ssl.conf /usr/local/apache2/conf.d/
+        
       - name: Set env.ARTIFACT_VERSION
         run: |
-          wget -q https://raw.githubusercontent.com/Bahmni/bahmni-infra-utils/main/setArtifactVersion.sh && chmod +x setArtifactVersion.sh
+          wget -q https://raw.githubusercontent.com/ArpchanHospital/bahmni-infra-utils/main/setArtifactVersion.sh && chmod +x setArtifactVersion.sh
           ./setArtifactVersion.sh
           rm setArtifactVersion.sh
       - name: Use Node.js 10.16.3
@@ -57,37 +62,37 @@ jobs:
           platforms: linux/amd64,linux/arm64
           file: package/docker/Dockerfile
           push: true
-          tags: bahmni/bahmni-web:${{ env.ARTIFACT_VERSION }},bahmni/bahmni-web:latest
-      - name: Update Version and Image Tag
-        run: |
-          yq --inplace '.image.tag = "${{ env.ARTIFACT_VERSION }}"' $HELM_CHART_PATH/values.yaml
-          yq --inplace '.version = "${{ env.ARTIFACT_VERSION }}"' $HELM_CHART_PATH/Chart.yaml
-      - name: Helm Lint
-        run: helm lint $HELM_CHART_PATH
+          tags: itsolutionsdocker/arpchan-web:${{ env.ARTIFACT_VERSION }},itsolutionsdocker/arpchan-web:latest
+      # - name: Update Version and Image Tag
+      #   run: |
+      #     yq --inplace '.image.tag = "${{ env.ARTIFACT_VERSION }}"' $HELM_CHART_PATH/values.yaml
+      #     yq --inplace '.version = "${{ env.ARTIFACT_VERSION }}"' $HELM_CHART_PATH/Chart.yaml
+      # - name: Helm Lint
+      #   run: helm lint $HELM_CHART_PATH
 
-      - name: Helm Package
-        run: helm package $HELM_CHART_PATH
+      # - name: Helm Package
+      #   run: helm package $HELM_CHART_PATH
 
-      - name: Checkout Charts Repository
-        uses: actions/checkout@v2
-        with:
-          repository: Bahmni/helm-charts
-          ref: gh-pages
-          path: helm-charts
-          persist-credentials: false
+      # - name: Checkout Charts Repository
+      #   uses: actions/checkout@v2
+      #   with:
+      #     repository: ArpchanHospital/helm-charts
+      #     ref: gh-pages
+      #     path: helm-charts
+      #     persist-credentials: false
 
-      - name: Copy Helm Archive
-        run: cp bahmni-web-${{ env.ARTIFACT_VERSION }}.tgz helm-charts/bahmni-web/
+      # - name: Copy Helm Archive
+      #   run: cp bahmni-web-${{ env.ARTIFACT_VERSION }}.tgz helm-charts/bahmni-web/
 
-      - name: Helm Index
-        working-directory: helm-charts/
-        run: helm repo index --merge index.yaml --url https://bahmni.github.io/helm-charts/  .
+      # - name: Helm Index
+      #   working-directory: helm-charts/
+      #   run: helm repo index --merge index.yaml --url https://bahmni.github.io/helm-charts/  .
 
-      - name: Commit and Push Chart Repository
-        working-directory: helm-charts/
-        run: |
-          git config user.name ${{ secrets.BAHMNI_USERNAME}}
-          git config user.email ${{ secrets.BAHMNI_EMAIL}}
-          git add .
-          git commit -m "Release of bahmni-web-${{ env.ARTIFACT_VERSION }}"
-          git push 'https://${{ secrets.BAHMNI_USERNAME}}:${{ secrets.BAHMNI_PAT}}@github.com/bahmni/helm-charts.git' gh-pages
+      # - name: Commit and Push Chart Repository
+      #   working-directory: helm-charts/
+      #   run: |
+      #     git config user.name ${{ secrets.BAHMNI_USERNAME}}
+      #     git config user.email ${{ secrets.BAHMNI_EMAIL}}
+      #     git add .
+      #     git commit -m "Release of bahmni-web-${{ env.ARTIFACT_VERSION }}"
+      #     git push 'https://${{ secrets.BAHMNI_USERNAME}}:${{ secrets.BAHMNI_PAT}}@github.com/bahmni/helm-charts.git' gh-pages

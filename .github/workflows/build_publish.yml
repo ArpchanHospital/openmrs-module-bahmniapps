@@ -17,10 +17,13 @@ jobs:
       HELM_CHART_PATH: package/helm/
     steps:
       - uses: actions/checkout@v2
+
+      - name: Create Apache Configuration Directory
+        run: mkdir -p /usr/local/apache2/conf.d/
       
        # Add your custom Apache configuration file
       - name: Add Custom Apache Configuration
-        run: cp docker-config/ssl.conf /usr/local/apache2/conf.d/ssl.conf
+        run: cp docker-config/ssl.conf /usr/local/apache2/conf.d/
         
       - name: Set env.ARTIFACT_VERSION
         run: |

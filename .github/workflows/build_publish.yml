@@ -20,7 +20,7 @@ jobs:
       
        # Add your custom Apache configuration file
       - name: Add Custom Apache Configuration
-        run: cp docker-config/ssl.conf /usr/local/apache2/conf.d/
+        run: cp docker-config/ssl.conf /usr/local/apache2/conf.d/ssl.conf
         
       - name: Set env.ARTIFACT_VERSION
         run: |

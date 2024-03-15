@@ -10,8 +10,8 @@ metadata:
     environment: dev
 
 image:
-  repository: bahmni
-  name: bahmni-web
+  repository: itsolutionsdocker
+  name: arpchan-web
   tag: latest
 
 service:

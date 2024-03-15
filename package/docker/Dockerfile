@@ -19,4 +19,4 @@ COPY package/docker/unauthorized.html /usr/local/apache2/htdocs/
 COPY package/docker/style.css /usr/local/apache2/htdocs/
 
 # Copy BahmniApps
-COPY ui/dist/. /usr/local/apache2/htdocs/bahmni/
+COPY ui/dist/. /usr/local/apache2/htdocs/arpchan/

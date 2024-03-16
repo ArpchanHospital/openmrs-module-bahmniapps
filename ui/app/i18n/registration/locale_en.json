@@ -119,7 +119,7 @@
   "REGISTRATION_TO_CLINICAL": "Save and go to Dashboard",
   "FILE_UPLOAD_MUST_BE_IMAGE": "File uploaded must be an image",
   "FILE_UPLOAD_MUST_BE_LESS_THAN": "File size should be less than",
-  "PATIENT_ATTRIBUTE_GIVEN_NAME_LOCAL": "First Name in Arabic",
-  "PATIENT_ATTRIBUTE_FAMILY_NAME_LOCAL": "Last Name in Arabic",
-  "PATIENT_ATTRIBUTE_MIDDLE_NAME_LOCAL": "Middle Name in Arabic"
+  "PATIENT_ATTRIBUTE_GIVEN_NAME_LOCAL": "First Name in Kannada",
+  "PATIENT_ATTRIBUTE_FAMILY_NAME_LOCAL": "Last Name in Kannada",
+  "PATIENT_ATTRIBUTE_MIDDLE_NAME_LOCAL": "Middle Name in Kannada"
 }
